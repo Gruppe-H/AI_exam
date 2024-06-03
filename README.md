@@ -1,5 +1,11 @@
 # AI_exam
 
+#### Our project
+
+- Create a chatbot, trained on review, plot and can be asked about a movie question.
+- Create a face recognition on celebs from movie posters
+- Maybe create a movie recommendation based on users former watches
+
 ### Business case
 
 Select one or more business or social domains, where AI can bring value. Formulate a problem statement, context,
