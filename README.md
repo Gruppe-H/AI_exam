@@ -20,7 +20,7 @@ Then in one terminal enter:
 ``` ollama serve ```
 
 And in another enter: 
-``` ollama run (maybe llama3) ```
+``` ollama run mistral ```
 
 ### Business case
 
