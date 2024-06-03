@@ -6,6 +6,22 @@
 - Create prediction of movie sucess
 - Create user profiling and clustering based on past watched movies
 
+### Run Ollama
+
+first check if ollama is running:
+``` sudo lsof -i :11434```
+
+- Enter your password.
+
+Close Ollama if its running and you cant connect:
+``` osascript -e 'tell app "Ollama" to quit' ```
+
+Then in one terminal enter:
+``` ollama serve ```
+
+And in another enter: 
+``` ollama run (maybe llama3) ```
+
 ### Business case
 
 Select one or more business or social domains, where AI can bring value. Formulate a problem statement, context,
