@@ -3,8 +3,8 @@
 #### Our project
 
 - Create a chatbot, trained on review, plot and can be asked about a movie question.
-- Create a face recognition on celebs from movie posters
-- Maybe create a movie recommendation based on users former watches
+- Create prediction of movie sucess
+- Create user profiling and clustering based on past watched movies
 
 ### Business case
 
