@@ -1,10 +1,24 @@
-# AI_exam
+# AI and Movies
+### By Group H - Caroline and Maria
+#### AI_exam
 
-#### Our project
+## Problem statement
+Although there are many movies to choose from, it can be difficult to find a movie to watch. We have decided to use AI to make it easier, and we will achive this by creating three different models; one for user profiling and clustering, one for predicting movie success, and a chatbot to answer movie-related questions.
 
-- Create a chatbot, trained on review, plot and can be asked about a movie question.
-- Create prediction of movie sucess
-- Create user profiling and clustering based on past watched movies
+## Motivation
+With the amount of streaming platforms and movies being produced each year, it should be easy to find an interesting movie to watch whenever you want. However, it can be quite overwhelming when you open up a streaming platform and see the many options, which can lead to decision fatique and disinterest. Therefor, we wanted to create an AI model for user profiling based on past watched movies, so we can use it to recommend new movies to the users. Futhermore, we also wanted to create a chatbot that can answer movie-related questions, so a viewer could get help when choosing what to watch. Lastly, since it can be expensive to both produce movies, but also for the viewer to watch new movies, we wanted to create an AI model that can predict the succes and revenue of new movies.
+
+## Research questions
+1. How can users' viewing histories and ratings be used to profile new users and for recommendations?
+2. Which features influence the revenue of a new movie?
+3. How can generative AI be used to make it easier for a person to choose a movie to watch?
+
+## Theoretical foundation
+
+## Discussion
+
+## Implementation
+To run our chatbot follow these steps:
 
 ### Run Ollama
 
@@ -21,6 +35,20 @@ Then in one terminal enter:
 
 And in another enter: 
 ``` ollama run mistral ```
+
+### Run frontend
+Go to [this repo](https://github.com/Gruppe-H/DB_Exam_frontend) and clone it and follow the setup guide in the README. Then open a browser on [http://localhost:3000/chatbot](http://localhost:3000/chatbot) and ask questions. 
+
+Note: The chatbot can be slow to answer.
+
+
+
+#### Our project
+
+- Create a chatbot, trained on review, plot and can be asked about a movie question.
+- Create prediction of movie sucess
+- Create user profiling and clustering based on past watched movies
+
 
 ### Business case
 
