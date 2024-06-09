@@ -89,3 +89,113 @@ Apply various visualisation and explanation techniques to guide the users throug
 insights revealed by the AI algorithms.
 
 Deploy the solution locally (on localhost) or on a cloud of your choice.
+
+
+
+## Business Case
+#### **Domain:** Movie Industry
+
+#### Problem Statement:
+
+The movie industry is constantly looking for ways to maximize revenue and enhance viewer engagement. Leveraging AI can provide insights into movie success predictors, enhance user experience with intelligent chatbots, and offer personalized recommendations.
+
+#### Context:
+
+We aim to create an AI-driven solution for the movie industry that includes a chatbot for answering movie-related questions, a predictive model for movie success, and a recommendation system based on user profiling.
+
+#### Research Questions:
+
+1. How accurately can we predict the box office success of a movie using its budget, popularity, runtime, and other features?
+2. Can we build an effective chatbot that answers questions about movies based on their plots and reviews?
+3. How can we use user profiling to recommend movies based on previously watched titles?
+
+#### Hypotheses:
+
+Movies with higher budgets and higher popularity scores tend to generate more revenue.
+A chatbot trained on movie plots and reviews can provide relevant and accurate answers to user queries.
+User clustering based on watched movies can significantly improve the accuracy of movie recommendations.
+
+## Data
+#### Data Sources:
+
+**Movie Production Details:** Budget, revenue, popularity, runtime, vote_average, vote_count, genres, etc.
+**Movie Detailes:** Movie ids, Titles and genres from IMDb non-commercial dataset.
+**Review, Ratings and Plot:** User reviews, ratings and movie plots from Kaggle dataset.
+
+#### Data Ingestion and Preprocessing:
+
+1. Collect Data:
+Use APIs or web scraping to gather movie details, reviews, and plots.
+2. Preprocess Data:
+Handle missing values, convert categorical data to numerical, normalize/standardize features.
+Tokenize and clean text data for reviews and plots.
+
+#### Data Exploration:
+
+Perform statistical analysis and visualizations to understand data distributions and correlations.
+
+## AI Models
+#### Selected Algorithms:
+
+1. **Supervised Learning:**
+Linear Regression for predicting movie success (revenue).
+2. **Unsupervised Learning:**
+Clustering (K-Means, DBSCAN) for user profiling and recommendations.
+3. **Natural Language Processing (NLP):**
+Large Language Models (e.g., GPT-4) for the chatbot.
+
+#### Model Development:
+1. **Movie Success Prediction:**
+* Train a Linear Regression model using features like budget, popularity, runtime, vote_average, and vote_count.
+* Evaluate using metrics like Mean Absolute Error (MAE) and R-squared.
+
+2. **Chatbot:**
+
+* Train a Large Language Model on movie plots and reviews.
+* Use fine-tuning techniques to specialize the model for answering movie-related queries.
+
+3. **User Profiling and Recommendations:**
+
+* Cluster users based on their watched movies using K-Means or DBSCAN.
+* Generate recommendations by identifying similar users within clusters.
+
+#### Model Testing:
+
+* Use a train-test-validation split to evaluate model performance on unseen data.
+* Iterate and improve models based on performance metrics.
+
+## Quality Assessment
+#### Metrics:
+
+1. **Prediction Quality:**
+* Mean Absolute Error (MAE)
+* R-squared
+2. **Classification Quality:**
+* Confusion Matrix
+* F1 Score
+* Recall
+3. **Clustering Quality:**
+* Silhouette Score
+* Davies-Bouldin Index
+
+#### Improvement:
+
+* Iterate through feature engineering, parameter tuning, and model selection to enhance performance.
+* Compare models and select the best performing ones.
+
+## AI Application
+#### Implementation:
+
+* **Interactive Chatbot:** Develop a chatbot interface using NLP models to answer movie-related questions.
+* **Prediction Dashboard:** Create a dashboard to visualize predicted movie success metrics.
+* **Recommendation System:** Build a recommendation engine that suggests movies based on user profiles.
+
+#### Deployment:
+
+* Deploy the solution locally or on a cloud platform (e.g., AWS, Azure).
+* Ensure the application is user-friendly and provides clear insights.
+
+#### Visualization and Explanation:
+
+* Use charts, graphs, and visual summaries to present data and model insights.
+* Implement user guides and tooltips to help users navigate the application.
