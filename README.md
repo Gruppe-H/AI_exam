@@ -14,8 +14,10 @@ With the amount of streaming platforms and movies being produced each year, it s
 3. How can generative AI be used to make it easier for a person to choose a movie to watch?
 
 ## Theoretical foundation
+We wanted to create the chatbot based on a Large Language Model, 
 
-## Discussion
+## Argumentation
+We wanted to train our chatbot based on the movie data that we had, but since the movie plot_summary, plot_synopsis and reviews were made by users, we were unsure of how accurate the information was, so we chose to collect data about the movies from wikipedia instead. 
 
 ## Implementation
 To run our chatbot follow these steps:
