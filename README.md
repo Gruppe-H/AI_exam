@@ -176,7 +176,7 @@ Large Language Models (e.g., GPT-4) for the chatbot.
 * Recall
 3. **Clustering Quality:**
 * Silhouette Score
-* Davies-Bouldin Index
+* Elbow Curve
 
 #### Improvement:
 
