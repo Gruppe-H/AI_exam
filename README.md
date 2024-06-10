@@ -13,13 +13,64 @@ With the amount of streaming platforms and movies being produced each year, it s
 2. Which features influence the revenue of a new movie?
 3. How can generative AI be used to make it easier for a person to choose a movie to watch?
 
-## Theoretical foundation
-We wanted to create the chatbot based on a Large Language Model.
-The predictions are expected to be made with regression, based on budget and revenue.
-And for the recommendations we want to use Clustering. 
-
 ## Argumentation
-We wanted to train our chatbot based on the movie data that we had, but since the movie plot_summary, plot_synopsis and reviews were made by users, we were unsure of how accurate the information was, so we chose to collect data about the movies from wikipedia instead. 
+
+### Data
+We have used these datasets:
+1. Datasets from (IMDb)[https://datasets.imdbws.com/]
+2. The review dataset from (kaggle.com)[https://www.kaggle.com/datasets/rmisra/imdb-spoiler-dataset?select=IMDB_reviews.json]
+3. Movies_metadata.csv from (kaggle.com)[https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset/code]. It contains 45466 entries and 24 different columns, incl. budget, revenue, popularity, votes, genres, and more.
+
+We created a folder called 'Data' in the root of our project, but since the files were too big for GitHub, it has been ignored in commits. We have used data wrangling to preprocess the data to be able to use it for our different models.
+
+### AI models and ML algorithms
+We wanted to create the chatbot based on a Large Language Model.
+The predictions are expected to be made with regression, and should predict revenue.
+And for the recommendations we want to use clustering. 
+
+#### Chatbot
+The chatbot should be able to answer most questions a user could have about the movies on the page. Therefore, we first wanted to train our chatbot based on the movie data that we had, but since the movie plot_summary, plot_synopsis and reviews were made by users, we were unsure of how accurate the information was, and chose to collect data about the movies from wikipedia instead. 
+
+So when designing it, we first found all the titles of the movies in the dataset and then found and loaded the wikipedia pages of those names. We also chose to load the more generic Wikipedia page called 'Film' that explains more in general what movies are. 
+
+When we had collected our data, we used chunking to split the data, and vectorized it with `HuggingFaceEmbeddings`, so we could store the embeddings in a vector store called `Chroma`. We then trained a mistral model from Ollama on the embeddings. 
+
+It was created mostly by Caroline.
+
+##### Demo
+We created a demo of the chatbot
+https://github.com/Gruppe-H/AI_exam/assets/49302236/2baefb2f-6c79-4d44-bd79-458795c31d76
+
+From our chatbot, we can conclude that it doesn't seem to be able to help a user find a movie to watch, but it can answer simple questions about a movie, which might still help a user decide wether or not to watch that specific movie. But as we wanted the viewer to have less options and movies to concider, as to not be overwhelmed by the choices, the chatbot is not very helpful. 
+
+### User Profiling and Recommendations
+We created multiple K-Means models, experimenting how we could best get recommendations based on the user's viewing history and previous reviews. We weren't satisfied with a lot of them, so we will not the describe the design of each, but just the design and process of the model, we chose to integrate into our [Movie Information System](https://github.com/Gruppe-H/DB_Exam_frontend), which is found in [this notebook](https://github.com/Gruppe-H/AI_exam/blob/main/profiling-Copy1.ipynb).
+
+First, we collected and cleaned the movie information data and the user reviews data, and created some visualizations to gain more insight. We then cleaned the reviews and vectorized them using `TfidfVectorizer`. 
+
+We wanted to use K-Means to cluster our movie and user data. To find the optimal amount of clusters ($k$), we fitted multiple K-Means models on the data with $k$=1 to $k$=50 and then created an Elbow Curve graph.
+![Elbow Curve](https://github.com/Gruppe-H/AI_exam/assets/49302236/60c51306-c761-4dab-b879-5c841c831641)
+
+Since we weren't very sure of the optimal $k$, we also tested the silhoutte score for $k$=1 to $k$=50 and plotted the silhoutte score.
+![Silhouette Score](https://github.com/Gruppe-H/AI_exam/assets/49302236/4feb441a-db76-4dc8-a4fb-985416b5ffdd)
+
+The optimal number of clusters seemed to be 32, so we used this amount to train our K-Means model. We wanted to plot the clusters, so we used Priciple Component Analysis (PCA) to reduce the dimensions to 2D and plotted the clusters.
+![Movie Clusters PCA 2D](https://github.com/Gruppe-H/AI_exam/assets/49302236/e75996cb-0368-4214-adfd-2f1894910b4e)
+Since the clustering seemed to overlab a lot, we also plotted the clusters in 3D.
+![image](https://github.com/Gruppe-H/AI_exam/assets/49302236/96d41390-f4a3-4494-89dc-f9d87a14bf81)
+We still weren't sure of the quality of the clustering, but wanted to see the predictions and recommendations our model would come up with for some different users. To test the quality of the recommended movies, we look at the user's previously liked movies and checked if the recommendations were new for the user. 
+
+We concluded that although the recommendations weren't what we had expected, they were similar in some ways to the movies that the user had previously enjoyed and the overall ratings and reviews mattered in the recommendations.
+
+We both worked on versions of this model.
+
+### Movie Success Prediction
+First, we collected and cleaned the data, handling missing and duplicated data. Then we visulied the data to gain more insight, including a pairplot to explore the correlations between different pairs of features. Then we split and tested the method of splitting our data.
+
+We then used feature engineering to create some combined features; `budget_per_popularity`, `revenue_per_budget`, and `vote_count_per_revenue` and looked at the corelation matrix.
+We then created a transformation pipeline to preprocess our data and trained a Linear Regression model.
+
+Created mainly by Maria.
 
 ## Implementation
 To run our chatbot follow these steps:
@@ -41,161 +92,6 @@ And in another enter:
 ``` ollama run mistral ```
 
 ### Run frontend
-Go to [this repo](https://github.com/Gruppe-H/DB_Exam_frontend) and clone it and follow the setup guide in the README. Then open a browser on [http://localhost:3000/chatbot](http://localhost:3000/chatbot) and ask questions. 
+Go to [this repo](https://github.com/Gruppe-H/DB_Exam_frontend) and clone it and follow the setup guide in the README. Then open a browser on [http://localhost:3000/chatbot](http://localhost:3000/chatbot) and ask questions. Or login with a user to see personalized recommendations. 
 
 Note: The chatbot can be slow to answer.
-
-
-
-#### Our project
-
-- Create a chatbot, trained on review, plot and can be asked about a movie question.
-- Create prediction of movie sucess
-- Create user profiling and clustering based on past watched movies
-
-
-### Business case
-
-Select one or more business or social domains, where AI can bring value. Formulate a problem statement, context,
-research question(s), and hypotheses for your AI solution.
-
-### Data
-
-Searching Internet and other media, find relevant data sources that can be used in your experiments.
-Ingest and pre-process the collected data into proper data structures, applying data wrangling techniques. Explore
-and explain the data by statistics and visualisation.
-
-### AI Models
-
-Select three or more AI methods and algorithms that could solve the problem. Create, train, and/or augment
-relevant data models applying supervised or unsupervised machine learning, artificial neural networks, knowledge
-graphs, or large language models.
-Test the models created by the learners operating on test data sets, as well as on new data sets (training, test and
-validation sets)
-
-### Quality Assessment
-
-Select appropriate statistics for measuring the quality of your models. Calculate measures assessing the quality of
-the models and their ability to produce intelligent prediction, prescription, or generation.
-Iterate the data modelling operations, improving the quality of the models, as much as possible.
-Compare the assessment results and use them to select the best performing models. Save these models in data
-stores for further implementation.
-
-### AI Application
-
-Implement the data and the successful AI operations into an interactive application with simple user interface,
-presenting the process and results in human-understandable form.
-Apply various visualisation and explanation techniques to guide the users through the application and interpret the
-insights revealed by the AI algorithms.
-
-Deploy the solution locally (on localhost) or on a cloud of your choice.
-
-
-
-## Business Case
-#### **Domain:** Movie Industry
-
-#### Problem Statement:
-
-The movie industry is constantly looking for ways to maximize revenue and enhance viewer engagement. Leveraging AI can provide insights into movie success predictors, enhance user experience with intelligent chatbots, and offer personalized recommendations.
-
-#### Context:
-
-We aim to create an AI-driven solution for the movie industry that includes a chatbot for answering movie-related questions, a predictive model for movie success, and a recommendation system based on user profiling.
-
-#### Research Questions:
-
-1. How accurately can we predict the box office success of a movie using its budget, popularity, runtime, and other features?
-2. Can we build an effective chatbot that answers questions about movies based on their plots and reviews?
-3. How can we use user profiling to recommend movies based on previously watched titles?
-
-#### Hypotheses:
-
-Movies with higher budgets and higher popularity scores tend to generate more revenue.
-A chatbot trained on movie plots and reviews can provide relevant and accurate answers to user queries.
-User clustering based on watched movies can significantly improve the accuracy of movie recommendations.
-
-## Data
-#### Data Sources:
-
-**Movie Production Details:** Budget, revenue, popularity, runtime, vote_average, vote_count, genres, etc.
-**Movie Detailes:** Movie ids, Titles and genres from IMDb non-commercial dataset.
-**Review, Ratings and Plot:** User reviews, ratings and movie plots from Kaggle dataset.
-
-#### Data Ingestion and Preprocessing:
-
-1. Collect Data:
-Use APIs or web scraping to gather movie details, reviews, and plots.
-2. Preprocess Data:
-Handle missing values, convert categorical data to numerical, normalize/standardize features.
-Tokenize and clean text data for reviews and plots.
-
-#### Data Exploration:
-
-Perform statistical analysis and visualizations to understand data distributions and correlations.
-
-## AI Models
-#### Selected Algorithms:
-
-1. **Supervised Learning:**
-Linear Regression for predicting movie success (revenue).
-2. **Unsupervised Learning:**
-Clustering (K-Means, DBSCAN) for user profiling and recommendations.
-3. **Natural Language Processing (NLP):**
-Large Language Models (e.g., GPT-4) for the chatbot.
-
-#### Model Development:
-1. **Movie Success Prediction:**
-* Train a Linear Regression model using features like budget, popularity, runtime, vote_average, and vote_count.
-* Evaluate using metrics like Mean Absolute Error (MAE) and R-squared.
-
-2. **Chatbot:**
-
-* Train a Large Language Model on movie plots and reviews.
-* Use fine-tuning techniques to specialize the model for answering movie-related queries.
-
-3. **User Profiling and Recommendations:**
-
-* Cluster users based on their watched movies using K-Means or DBSCAN.
-* Generate recommendations by identifying similar users within clusters.
-
-#### Model Testing:
-
-* Use a train-test-validation split to evaluate model performance on unseen data.
-* Iterate and improve models based on performance metrics.
-
-## Quality Assessment
-#### Metrics:
-
-1. **Prediction Quality:**
-* Mean Absolute Error (MAE)
-* R-squared
-2. **Classification Quality:**
-* Confusion Matrix
-* F1 Score
-* Recall
-3. **Clustering Quality:**
-* Silhouette Score
-* Elbow Curve
-
-#### Improvement:
-
-* Iterate through feature engineering, parameter tuning, and model selection to enhance performance.
-* Compare models and select the best performing ones.
-
-## AI Application
-#### Implementation:
-
-* **Interactive Chatbot:** Develop a chatbot interface using NLP models to answer movie-related questions.
-* **Prediction Dashboard:** Create a dashboard to visualize predicted movie success metrics.
-* **Recommendation System:** Build a recommendation engine that suggests movies based on user profiles.
-
-#### Deployment:
-
-* Deploy the solution locally or on a cloud platform (e.g., AWS, Azure).
-* Ensure the application is user-friendly and provides clear insights.
-
-#### Visualization and Explanation:
-
-* Use charts, graphs, and visual summaries to present data and model insights.
-* Implement user guides and tooltips to help users navigate the application.
